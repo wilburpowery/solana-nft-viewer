@@ -11,9 +11,21 @@ import { SearchCircleIcon } from '@heroicons/react/solid';
 
 import { useState } from 'react';
 
+import Modal from '../components/Modal';
+
 export default function Home() {
   const [collectibles, setCollectibles] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [modalOpen, setModalOpen] = useState(false);
+  const closeModal = () => {
+    setModalOpen(false);
+  };
+  const [activeCollectibe, setActiveCollectible] = useState(null);
+
+  const viewCollectible = (collectible) => {
+    setActiveCollectible(collectible);
+    setModalOpen(true);
+  };
 
   const lookupWallet = async (event) => {
     event.preventDefault();
@@ -111,7 +123,10 @@ export default function Home() {
           >
             {collectibles?.nfts?.map((nft) => (
               <li className="relative" key={nft.name}>
-                <div className="block w-full overflow-hidden rounded-lg group aspect-w-10 aspect-h-7 focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-offset-gray-100 focus-within:ring-solana">
+                <div
+                  className="block w-full overflow-hidden rounded-lg group aspect-w-10 aspect-h-7 focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-offset-gray-100 focus-within:ring-solana"
+                  onClick={() => viewCollectible(nft)}
+                >
                   <Image
                     src={nft.image}
                     alt={nft.name}
@@ -141,6 +156,13 @@ export default function Home() {
 
         <Footer />
       </div>
+
+      <Modal
+        show={modalOpen}
+        close={closeModal}
+        collectible={activeCollectibe}
+      />
+
       <ToastContainer
         position="top-right"
         autoClose={5000}
