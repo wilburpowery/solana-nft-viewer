@@ -7,6 +7,7 @@ import Image from 'next/image';
 
 import Header from '../components/Header';
 import Footer from '../components/Footer';
+import { SearchCircleIcon } from '@heroicons/react/solid';
 
 import { useState } from 'react';
 
@@ -50,30 +51,34 @@ export default function Home() {
             <form action="" onSubmit={lookupWallet}>
               <div>
                 <label
-                  htmlFor="email"
-                  className="block text-sm font-medium text-white"
+                  htmlFor="wallet"
+                  className="block text-sm font-medium text-gray-700"
                 >
                   Wallet Address
                 </label>
-                <div className="relative mt-1">
-                  <input
-                    type="text"
-                    name="wallet"
-                    id="wallet"
-                    className="block w-full py-4 text-white bg-gray-900 border-gray-800 rounded-md shadow-sm focus:ring-solana-purple focus:border-solana-purple sm:text-sm"
-                    placeholder="Public Address"
-                    required
-                  />
-                  <button
-                    className={`absolute inline-flex items-center justify-center px-4 py-2 font-sans text-white hover:bg-solana-green bg-solana-purple top-2 right-1 ${
-                      loading ? 'cursor-not-allowed opacity-70' : ''
-                    }`}
-                    disabled={loading}
-                  >
-                    {loading ? 'Searching' : 'Search'}
+                <div className="flex mt-1 rounded-md shadow-sm">
+                  <div className="relative flex items-stretch flex-grow focus-within:z-10">
+                    <input
+                      type="text"
+                      name="wallet"
+                      id="wallet"
+                      className="block w-full py-3 text-white bg-gray-900 border-gray-800 rounded-none shadow-sm focus:ring-solana-purple focus:border-solana-purple rounded-l-md sm:text-sm"
+                      placeholder="Wallet Address"
+                      required
+                      autoComplete="off"
+                    />
+                  </div>
+                  <button className="relative inline-flex items-center px-4 py-2 -mr-px space-x-2 text-sm font-medium text-white bg-solana-purple rounded-r-md hover:bg-opacity-80 focus:outline-none">
+                    <span>Search</span>
+                    <SearchCircleIcon
+                      className={`w-6 h-5 text-white ${
+                        loading ? 'hidden' : 'block'
+                      }`}
+                      aria-hidden="true"
+                    />
                     <svg
-                      className={`ml-1 h-5 w-5 ${
-                        loading ? 'block animate-spin' : 'hidden'
+                      className={`w-6 h-5 text-white animate-spin ${
+                        loading ? 'block' : 'hidden'
                       }`}
                       xmlns="http://www.w3.org/2000/svg"
                       fill="none"
