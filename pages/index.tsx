@@ -104,12 +104,8 @@ export default function Home() {
             </form>
           </div>
 
-          <p className="mb-4">
-            {collectibles?.wallet ? `Wallet ${collectibles?.wallet}` : ''}
-          </p>
-
           <ul
-            className={`grid grid-cols-2 gap-x-4 gap-y-8 sm:grid-cols-3 sm:gap-x-6 lg:grid-cols-4 xl:gap-x-8 ${
+            className={`mt-8 grid grid-cols-2 gap-x-4 gap-y-8 sm:grid-cols-3 sm:gap-x-6 lg:grid-cols-4 xl:gap-x-8 ${
               loading ? 'opacity-50 cursor-not-allowed' : ''
             }`}
           >
