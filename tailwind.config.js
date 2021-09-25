@@ -10,6 +10,10 @@ module.exports = {
         sans: ['Inter var', ...defaultTheme.fontFamily.sans],
       },
       colors: {
+        'dark-primary': '#08041A',
+        'dark-secondary': '#10142a',
+        'dark-tertiary': '#12182E',
+        'dark-lightest': '#22283E',
         'solana-purple': {
           DEFAULT: '#9945ff',
         },

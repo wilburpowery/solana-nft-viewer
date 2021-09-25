@@ -17,10 +17,6 @@ function classNames(...classes) {
 
 export default function Header() {
   return (
-    <header className="py-8">
-      <h1 className="mb-6 text-6xl font-bold text-center text-white">
-        Solana NFT Viewer 👀
-      </h1>
-    </header>
+
   );
 }

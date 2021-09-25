@@ -56,7 +56,7 @@ export default function Modal({ show, close, collectible }) {
                     <div className="mt-2">
                       {collectible ? (
                         <Image
-                          src={collectible?.image}
+                          src={`/api/imageproxy?url=${collectible?.image}`}
                           alt={collectible?.name}
                           width={500}
                           height={250}
