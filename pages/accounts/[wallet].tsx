@@ -20,8 +20,6 @@ const METAPLEX_SEED_CONSTANT = 'metadata';
 const METAPLEX_METADATA_PUBLIC_KEY =
   'metaqbxxUerdq28cj1RbAWkYQm3ybzjb6a8bt518x1s';
 
-import Modal from '../../components/Modal';
-
 import dynamic from 'next/dynamic';
 const LightGallery = dynamic(() => import('lightgallery/react'), {
   ssr: false,
@@ -38,17 +36,6 @@ import Link from 'next/link';
 import { ArrowRightIcon } from '@heroicons/react/outline';
 
 export default function WalletPage({ collectibles, wallet }) {
-  const [modalOpen, setModalOpen] = useState(false);
-  const closeModal = () => {
-    setModalOpen(false);
-  };
-  const [activeCollectibe, setActiveCollectible] = useState(null);
-
-  const viewCollectible = (collectible) => {
-    setActiveCollectible(collectible);
-    setModalOpen(true);
-  };
-
   return (
     <div className="min-h-screen p-8 text-white bg-black">
       <div className="min-h-full px-6 py-8 mx-auto rounded-lg max-w-7xl">
@@ -96,12 +83,6 @@ export default function WalletPage({ collectibles, wallet }) {
           ))}
         </LightGallery>
       </div>
-
-      <Modal
-        show={modalOpen}
-        close={closeModal}
-        collectible={activeCollectibe}
-      />
     </div>
   );
 }
