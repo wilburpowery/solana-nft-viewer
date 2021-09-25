@@ -13,7 +13,7 @@ import { useRouter } from 'next/router';
 
 export default function Home() {
   useEffect(() => {
-    document.querySelector('#wallet').focus();
+    document.getElementById('wallet').focus();
   });
   const router = useRouter();
   const [loading, setLoading] = useState(false);
