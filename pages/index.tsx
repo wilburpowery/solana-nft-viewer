@@ -3,13 +3,9 @@ import useSWR from 'swr';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-import Image from 'next/image';
-
 import { SearchCircleIcon } from '@heroicons/react/solid';
 
 import { useEffect, useState } from 'react';
-
-import Modal from '../components/Modal';
 
 import { validatePublicKey } from '../utils/utils';
 
@@ -20,18 +16,7 @@ export default function Home() {
     document.querySelector('#wallet').focus();
   });
   const router = useRouter();
-  const [collectibles, setCollectibles] = useState(null);
   const [loading, setLoading] = useState(false);
-  const [modalOpen, setModalOpen] = useState(false);
-  const closeModal = () => {
-    setModalOpen(false);
-  };
-  const [activeCollectibe, setActiveCollectible] = useState(null);
-
-  const viewCollectible = (collectible) => {
-    setActiveCollectible(collectible);
-    setModalOpen(true);
-  };
 
   const lookupWallet = async (event) => {
     event.preventDefault();
@@ -173,12 +158,6 @@ export default function Home() {
           </form>
         </div>
       </div>
-
-      <Modal
-        show={modalOpen}
-        close={closeModal}
-        collectible={activeCollectibe}
-      />
 
       <ToastContainer
         position="top-right"
