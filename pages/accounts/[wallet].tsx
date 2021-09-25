@@ -38,9 +38,11 @@ import { ArrowRightIcon } from '@heroicons/react/outline';
 export default function WalletPage({ collectibles, wallet }) {
   return (
     <div className="min-h-screen p-8 text-white bg-black">
-      <div className="min-h-full px-6 py-8 mx-auto rounded-lg max-w-7xl">
+      <div className="min-h-full mx-auto rounded-lg max-w-7xl">
         <div className="p-4 rounded-lg bg-dark-tertiary">
-          <h1 className="mb-4 text-2xl">Viewing NFTs in: {wallet}</h1>
+          <h1 className="mb-4 text-lg break-words md:text-2xl">
+            Viewing NFTs in: {wallet}
+          </h1>
 
           <Link href="/">
             <span className="flex items-center cursor-pointer text-solana-purple">
