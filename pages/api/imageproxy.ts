@@ -1,6 +1,10 @@
+import { request } from 'axios';
+
 export default async (req, res) => {
-  const url = decodeURIComponent(req.query.url);
-  const result = await fetch(url);
-  const body = await result.body;
-  body.pipe(res);
+  const readable = await request({
+    url: req.query.url,
+    responseType: 'stream',
+  });
+
+  await readable.data.pipe(res);
 };

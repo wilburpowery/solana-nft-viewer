@@ -7,7 +7,7 @@ import Image from 'next/image';
 
 import { SearchCircleIcon } from '@heroicons/react/solid';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import Modal from '../components/Modal';
 
@@ -16,6 +16,9 @@ import { validatePublicKey } from '../utils/utils';
 import { useRouter } from 'next/router';
 
 export default function Home() {
+  useEffect(() => {
+    document.querySelector('#wallet').focus();
+  });
   const router = useRouter();
   const [collectibles, setCollectibles] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -129,6 +132,7 @@ export default function Home() {
                     placeholder="Wallet Address"
                     required
                     autoComplete="off"
+                    autoFocus={true}
                   />
                 </div>
               </div>
