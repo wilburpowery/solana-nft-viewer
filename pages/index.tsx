@@ -36,7 +36,43 @@ export default function Home() {
   return (
     <div className="min-h-screen px-6 font-sans text-white bg-dark-primary">
       <Head>
-        <title>Solana NFT Viewer</title>
+        <title>SolanaNFTEyes.com - Your own NFT Gallery</title>
+        <meta name="title" content="SolanaNFTEyes.com - Your own NFT Gallery" />
+        <meta
+          name="description"
+          content="Scan any Solana wallet address and see all the NFTs in a beautiful gallery."
+        />
+
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://solananfteyes.com" />
+        <meta
+          property="og:title"
+          content="SolanaNFTEyes.com - Your own NFT Gallery"
+        />
+        <meta
+          property="og:description"
+          content="Scan any Solana wallet address and see all the NFTs in a beautiful gallery."
+        />
+        {/* <meta
+          property="og:image"
+          content="https://metatags.io/assets/meta-tags-16a33a6a8531e519cc0936fbba0ad904e52d35f34a46c97a2c9f6f7dd7d336f2.png"
+        /> */}
+
+        <meta property="twitter:card" content="summary_large_image" />
+        <meta property="twitter:url" content="https://solananfteyes.com" />
+        <meta
+          property="twitter:title"
+          content="SolanaNFTEyes.com - Your own NFT Gallery"
+        />
+        <meta
+          property="twitter:description"
+          content="Scan any Solana wallet address and see all the NFTs in a beautiful gallery."
+        />
+        {/* <meta
+          property="twitter:image"
+          content="https://metatags.io/assets/meta-tags-16a33a6a8531e519cc0936fbba0ad904e52d35f34a46c97a2c9f6f7dd7d336f2.png"
+        /> */}
+
         <link rel="icon" href="/favicon.ico" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link
