@@ -1,25 +1,7 @@
 import { useRouter } from 'next/router';
 import { useState } from 'react';
-import { ToastContainer, toast } from 'react-toastify';
-import useSWR from 'swr';
 import Image from 'next/image';
-import { GetServerSideProps } from 'next';
 import axios from 'axios';
-import {
-  Connection,
-  PublicKey,
-  clusterApiUrl,
-  TokenAccountsFilter,
-} from '@solana/web3.js';
-
-import { findProgramAddress } from '../../utils/utils';
-import { decodeMetadata, Metadata } from '../../utils/types';
-
-const NETWORK = clusterApiUrl('mainnet-beta');
-const METAPLEX_SEED_CONSTANT = 'metadata';
-const METAPLEX_METADATA_PUBLIC_KEY =
-  'metaqbxxUerdq28cj1RbAWkYQm3ybzjb6a8bt518x1s';
-
 import dynamic from 'next/dynamic';
 const LightGallery = dynamic(() => import('lightgallery/react'), {
   ssr: false,
@@ -35,7 +17,29 @@ import Link from 'next/link';
 
 import { ArrowRightIcon } from '@heroicons/react/outline';
 
-export default function WalletPage({ collectibles, wallet }) {
+export default function WalletPage() {
+  const router = useRouter();
+
+  const { wallet } = router.query;
+
+  const [collectibles, setCollectibles] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(false);
+
+  if (router.isReady) {
+    axios
+      .get(`/api/get-account-info/${wallet}`)
+      .then((response) => {
+        setError(false);
+        setCollectibles(response.data.nfts);
+        setLoading(false);
+      })
+      .catch((error) => {
+        setError(true);
+        setLoading(false);
+      });
+  }
+
   return (
     <div className="min-h-screen p-8 text-white bg-black">
       <div className="min-h-full mx-auto rounded-lg max-w-7xl">
@@ -51,6 +55,26 @@ export default function WalletPage({ collectibles, wallet }) {
             </span>
           </Link>
         </div>
+
+        {loading ? (
+          <div className="flex items-center justify-center w-full mt-32 animate-spin">
+            <span className="text-3xl">👀</span>
+          </div>
+        ) : (
+          ''
+        )}
+
+        {error ? (
+          <div className="flex flex-col items-center justify-center w-full mt-32">
+            <span className="mb-2 text-3xl">😢</span>
+            <p>
+              Something went wrong while loading your NFTs. Please refresh the
+              page.
+            </p>
+          </div>
+        ) : (
+          ''
+        )}
 
         <LightGallery
           speed={500}
@@ -89,62 +113,12 @@ export default function WalletPage({ collectibles, wallet }) {
   );
 }
 
-export const getServerSideProps: GetServerSideProps = async (context) => {
-  let { wallet } = context.params;
+// export const getServerSideProps: GetServerSideProps = async (context) => {
 
-  let PUBLIC_KEY: PublicKey;
-
-  try {
-    PUBLIC_KEY = new PublicKey(wallet);
-  } catch (error) {
-    return {
-      props: {},
-    };
-  }
-
-  const connection = new Connection(NETWORK);
-
-  const filters: TokenAccountsFilter = {
-    programId: new PublicKey('TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA'),
-  };
-
-  const data = await connection.getParsedTokenAccountsByOwner(
-    PUBLIC_KEY,
-    filters,
-  );
-
-  const accountNFTs = data.value.filter((token) => {
-    return (
-      token.account.data.parsed.info.tokenAmount.amount == 1 &&
-      token.account.data.parsed.info.tokenAmount.decimals == 0
-    );
-  });
-
-  let nfts = await accountNFTs.map(async (token) => {
-    const programAddress = await findProgramAddress(
-      [
-        Buffer.from(METAPLEX_SEED_CONSTANT),
-        new PublicKey(METAPLEX_METADATA_PUBLIC_KEY).toBuffer(),
-        new PublicKey(token.account.data.parsed.info.mint).toBuffer(),
-      ],
-      new PublicKey(METAPLEX_METADATA_PUBLIC_KEY),
-    );
-
-    const accountInfoData = await connection.getAccountInfo(
-      new PublicKey(programAddress[0]),
-    );
-
-    const metadata = decodeMetadata(accountInfoData.data);
-
-    const response = await axios.get(metadata.data.uri);
-    return Promise.resolve(response.data);
-  });
-
-  nfts = await Promise.all(nfts);
-  return {
-    props: {
-      wallet: wallet,
-      collectibles: nfts,
-    },
-  };
-};
+//   return {
+//     props: {
+//       wallet: wallet,
+//       collectibles: nfts,
+//     },
+//   };
+// };
