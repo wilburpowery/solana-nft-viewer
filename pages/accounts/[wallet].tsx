@@ -98,11 +98,11 @@ export default function WalletPage() {
         )}
 
         <LightGallery
+          licenseKey="AAC7666D-D0114A77-8C96F80F-E927E68C"
           speed={500}
           plugins={[lgThumbnail]}
           elementClassNames="mt-8 grid grid-cols-2 gap-2 sm:grid-cols-3 lg:grid-cols-4"
           selector=".item"
-          licenseKey="AAC7666D-D0114A77-8C96F80F-E927E68C"
           alignThumbnails="right"
         >
           {collectibles?.map((nft) => (
