@@ -1,4 +1,6 @@
 import axios from 'axios';
+import Redis from '../../../libs/redis';
+
 import {
   Connection,
   PublicKey,
@@ -23,6 +25,8 @@ const METAPLEX_METADATA_PUBLIC_KEY =
 export default async function handler(req, res) {
   const { wallet } = req.query;
   let PUBLIC_KEY: PublicKey;
+
+  const cacheStore = await Redis.hgetall(wallet);
 
   try {
     PUBLIC_KEY = new PublicKey(wallet);
@@ -59,6 +63,11 @@ export default async function handler(req, res) {
       new PublicKey(METAPLEX_METADATA_PUBLIC_KEY),
     );
 
+    if (cacheStore[programAddress[0]]) {
+      console.log(`Using cache for ${programAddress[0]}`);
+      return Promise.resolve(JSON.parse(cacheStore[programAddress[0]]));
+    }
+
     const accountInfoData = await connection.getAccountInfo(
       new PublicKey(programAddress[0]),
     );
@@ -66,6 +75,11 @@ export default async function handler(req, res) {
     const metadata = decodeMetadata(accountInfoData.data);
 
     const response = await axios.get(metadata.data.uri);
+
+    const redisPayload = response.data;
+    redisPayload.programAddress = programAddress[0];
+    Redis.hset(wallet, programAddress[0], JSON.stringify(redisPayload));
+
     return Promise.resolve(response.data);
   });
 
