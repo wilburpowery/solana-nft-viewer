@@ -26,21 +26,22 @@ export default function WalletPage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
 
-  useEffect(() => {
-    if (router.isReady && collectibles.length == 0) {
-      axios
-        .get(`/api/get-account-info/${wallet}`)
-        .then((response) => {
-          setError(false);
-          setCollectibles(response.data.nfts);
-          setLoading(false);
-        })
-        .catch((error) => {
-          setError(true);
-          setLoading(false);
-        });
-    }
-  });
+  const [tries, setTries] = useState(0);
+
+  if (router.isReady && collectibles.length == 0 && tries <= 1) {
+    setTries(tries + 1);
+    axios
+      .get(`/api/get-account-info/${wallet}`)
+      .then((response) => {
+        setError(false);
+        setCollectibles(response.data.nfts);
+        setLoading(false);
+      })
+      .catch((error) => {
+        setError(true);
+        setLoading(false);
+      });
+  }
 
   return (
     <div className="min-h-screen p-8 text-white bg-black">
