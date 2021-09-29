@@ -16,6 +16,7 @@ import {
 
 import { findProgramAddress } from '../../../utils/utils';
 import { decodeMetadata, Metadata } from '../../../utils/types';
+import collect from 'collect.js';
 
 const NETWORK = clusterApiUrl('mainnet-beta');
 const METAPLEX_SEED_CONSTANT = 'metadata';
@@ -23,6 +24,8 @@ const METAPLEX_METADATA_PUBLIC_KEY =
   'metaqbxxUerdq28cj1RbAWkYQm3ybzjb6a8bt518x1s';
 
 export default async function handler(req, res) {
+  console.log('Calling endpoint');
+
   const { wallet } = req.query;
   let PUBLIC_KEY: PublicKey;
 
@@ -64,7 +67,6 @@ export default async function handler(req, res) {
     );
 
     if (cacheStore[programAddress[0]]) {
-      console.log(`Using cache for ${programAddress[0]}`);
       return Promise.resolve(JSON.parse(cacheStore[programAddress[0]]));
     }
 
@@ -85,5 +87,9 @@ export default async function handler(req, res) {
 
   nfts = await Promise.all(nfts);
 
-  return res.status(200).json({ foo: 'bar', wallet: wallet, nfts: nfts });
+  return res.status(200).json({
+    foo: 'bar',
+    wallet: wallet,
+    nfts: collect(nfts).sortBy('properties.creators.0.address').toArray(),
+  });
 }

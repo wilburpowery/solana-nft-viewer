@@ -16,31 +16,21 @@ import lgThumbnail from 'lightgallery/plugins/thumbnail';
 import Link from 'next/link';
 
 import { ArrowRightIcon } from '@heroicons/react/outline';
+import { GetServerSideProps } from 'next';
+import Redis from '../../libs/redis';
+import useSWR from 'swr';
 
-export default function WalletPage() {
-  const router = useRouter();
+import collect from 'collect.js';
 
-  const { wallet } = router.query;
+const fetcher = (url) => fetch(url).then((r) => r.json());
 
-  const [collectibles, setCollectibles] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(false);
+export default function WalletPage({ wallet, nfts }) {
+  const { data, error } = useSWR(`/api/get-account-info/${wallet}`, fetcher, {
+    fallbackData: nfts,
+  });
 
-  const [tries, setTries] = useState(0);
-
-  if (router.isReady && collectibles.length == 0 && tries <= 1) {
-    setTries(tries + 1);
-    axios
-      .get(`/api/get-account-info/${wallet}`)
-      .then((response) => {
-        setError(false);
-        setCollectibles(response.data.nfts);
-        setLoading(false);
-      })
-      .catch((error) => {
-        setError(true);
-        setLoading(false);
-      });
+  if (data) {
+    console.log(data.nfts);
   }
 
   return (
@@ -59,7 +49,7 @@ export default function WalletPage() {
           </Link>
         </div>
 
-        {loading ? (
+        {/* {loading ? (
           <div className="flex items-center justify-center w-full mt-32 animate-spin">
             <svg
               className="w-10 h-10 mx-auto mr-3 -ml-1 text-white animate-spin"
@@ -84,7 +74,7 @@ export default function WalletPage() {
           </div>
         ) : (
           ''
-        )}
+        )} */}
 
         {error ? (
           <div className="flex flex-col items-center justify-center w-full mt-32">
@@ -98,7 +88,7 @@ export default function WalletPage() {
           ''
         )}
 
-        {collectibles.length ? (
+        {data?.nfts?.length ? (
           <LightGallery
             speed={500}
             plugins={[lgThumbnail]}
@@ -106,7 +96,7 @@ export default function WalletPage() {
             selector=".item"
             licenseKey={'AAC7666D-D0114A77-8C96F80F-E927E68C'}
           >
-            {collectibles?.map((nft) => (
+            {data?.nfts?.map((nft) => (
               <a
                 href={nft.image}
                 className="block w-full overflow-hidden rounded-lg group aspect-w-10 aspect-h-7 focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-offset-gray-100 focus-within:ring-solana item"
@@ -140,12 +130,17 @@ export default function WalletPage() {
   );
 }
 
-// export const getServerSideProps: GetServerSideProps = async (context) => {
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  const { wallet } = context.params;
 
-//   return {
-//     props: {
-//       wallet: wallet,
-//       collectibles: nfts,
-//     },
-//   };
-// };
+  let nfts = await Redis.hgetall(wallet);
+  nfts = Object.values(nfts);
+  nfts = nfts.map((item) => JSON.parse(item));
+
+  return {
+    props: {
+      wallet: wallet,
+      nfts: collect(nfts).sortBy('properties.creators.0.address').toArray(),
+    },
+  };
+};

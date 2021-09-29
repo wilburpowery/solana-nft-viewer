@@ -11,6 +11,7 @@
     "axios": "^0.21.4",
     "bn.js": "^5.2.0",
     "borsh": "^0.4.0",
+    "collect.js": "^4.29.0",
     "fathom-client": "^3.2.0",
     "ioredis": "^4.27.9",
     "lightgallery": "^2.2.1",
