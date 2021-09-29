@@ -97,39 +97,43 @@ export default function WalletPage() {
           ''
         )}
 
-        <LightGallery
-          licenseKey="AAC7666D-D0114A77-8C96F80F-E927E68C"
-          speed={500}
-          plugins={[lgThumbnail]}
-          elementClassNames="mt-8 grid grid-cols-2 gap-2 sm:grid-cols-3 lg:grid-cols-4"
-          selector=".item"
-          alignThumbnails="right"
-        >
-          {collectibles?.map((nft) => (
-            <div
-              className="block w-full overflow-hidden rounded-lg group aspect-w-10 aspect-h-7 focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-offset-gray-100 focus-within:ring-solana item"
-              key={nft.name}
-              data-src={nft.image}
-              data-sub-html={`
+        {collectibles.length ? (
+          <LightGallery
+            speed={500}
+            plugins={[lgThumbnail]}
+            elementClassNames="mt-8 grid grid-cols-2 gap-2 sm:grid-cols-3 lg:grid-cols-4"
+            selector=".item"
+            licenseKey={'AAC7666D-D0114A77-8C96F80F-E927E68C'}
+          >
+            {collectibles?.map((nft) => (
+              <a
+                href={nft.image}
+                className="block w-full overflow-hidden rounded-lg group aspect-w-10 aspect-h-7 focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-offset-gray-100 focus-within:ring-solana item"
+                key={nft.name}
+                data-src={nft.image}
+                data-sub-html={`
                 <h2 class="mb-2 text-2xl font-bold">${nft.name}</h2>
                 <p class="text-lg">${nft.description || ''}</p>
               `}
-              data-thumb={nft.image}
-            >
-              <img src={nft.image} className="hidden" alt={nft.name} />
+                data-thumb={nft.image}
+              >
+                <img src={nft.image} className="hidden" alt={nft.name} />
 
-              <Image
-                src={`/api/imageproxy?url=${encodeURIComponent(nft.image)}`}
-                alt={nft.name}
-                width={500}
-                height={490}
-                blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8//9PPQAJegN7evrihQAAAABJRU5ErkJggg=="
-                placeholder="blur"
-                className="object-cover transition-all duration-200 pointer-events-none group-hover:opacity-80 group-hover:scale-105"
-              />
-            </div>
-          ))}
-        </LightGallery>
+                <Image
+                  src={`/api/imageproxy?url=${encodeURIComponent(nft.image)}`}
+                  alt={nft.name}
+                  width={500}
+                  height={490}
+                  blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8//9PPQAJegN7evrihQAAAABJRU5ErkJggg=="
+                  placeholder="blur"
+                  className="object-cover transition-all duration-200 pointer-events-none group-hover:opacity-80 group-hover:scale-105"
+                />
+              </a>
+            ))}
+          </LightGallery>
+        ) : (
+          ''
+        )}
       </div>
     </div>
   );
