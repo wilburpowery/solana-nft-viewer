@@ -36,18 +36,18 @@ export default function Home() {
   return (
     <div className="min-h-screen px-6 font-sans text-white bg-dark-primary">
       <Head>
-        <title>SolanaNFTEyes.com - Your own NFT Gallery</title>
-        <meta name="title" content="SolanaNFTEyes.com - Your own NFT Gallery" />
+        <title>SolNFT.Gallery - Your own NFT Gallery</title>
+        <meta name="title" content="SolNFT.Gallery - Your own NFT Gallery" />
         <meta
           name="description"
           content="Scan any Solana wallet address and see all the NFTs in a beautiful gallery."
         />
 
         <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://solananfteyes.com" />
+        <meta property="og:url" content="https://solnft.gallery" />
         <meta
           property="og:title"
-          content="SolanaNFTEyes.com - Your own NFT Gallery"
+          content="SolNFT.Gallery - Your own NFT Gallery"
         />
         <meta
           property="og:description"
@@ -59,10 +59,10 @@ export default function Home() {
         /> */}
 
         <meta property="twitter:card" content="summary_large_image" />
-        <meta property="twitter:url" content="https://solananfteyes.com" />
+        <meta property="twitter:url" content="https://solnft.gallery" />
         <meta
           property="twitter:title"
-          content="SolanaNFTEyes.com - Your own NFT Gallery"
+          content="SolNFT.Gallery - Your own NFT Gallery"
         />
         <meta
           property="twitter:description"

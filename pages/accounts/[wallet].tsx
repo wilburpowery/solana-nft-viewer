@@ -24,6 +24,12 @@ import collect from 'collect.js';
 
 const fetcher = (url) => fetch(url).then((r) => r.json());
 
+import { proxyImageUrl } from '../../libs/imgix';
+
+const myLoader = ({ src, width, quality }) => {
+  return proxyImageUrl(src, width, quality);
+};
+
 export default function WalletPage({ wallet, nfts }) {
   const { data, error } = useSWR(`/api/get-account-info/${wallet}`, fetcher, {
     fallbackData: nfts,
@@ -108,10 +114,15 @@ export default function WalletPage({ wallet, nfts }) {
               `}
                 data-thumb={nft.image}
               >
-                <img src={nft.image} className="hidden" alt={nft.name} />
+                <img
+                  src={proxyImageUrl(nft.image)}
+                  className="hidden"
+                  alt={nft.name}
+                />
 
                 <Image
-                  src={`/api/imageproxy?url=${encodeURIComponent(nft.image)}`}
+                  loader={myLoader}
+                  src={nft.image}
                   alt={nft.name}
                   width={500}
                   height={490}
