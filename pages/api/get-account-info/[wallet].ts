@@ -18,7 +18,7 @@ import { findProgramAddress } from '../../../utils/utils';
 import { decodeMetadata, Metadata } from '../../../utils/types';
 import collect from 'collect.js';
 
-const NETWORK = clusterApiUrl('mainnet-beta');
+const NETWORK = 'https://solana-api.projectserum.com';
 const METAPLEX_SEED_CONSTANT = 'metadata';
 const METAPLEX_METADATA_PUBLIC_KEY =
   'metaqbxxUerdq28cj1RbAWkYQm3ybzjb6a8bt518x1s';
