@@ -97,7 +97,7 @@ export default function Home() {
       <div className="flex flex-col items-center justify-center min-h-screen mx-auto max-w-7xl">
         <div className="flex flex-col justify-center p-8 rounded-lg bg-dark-tertiary">
           <div>
-            <Logo />
+            <Logo classes="" />
           </div>
           <p className="mb-4">
             Enter a wallet address and view your entire collection.
