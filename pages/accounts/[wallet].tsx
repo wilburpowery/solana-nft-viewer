@@ -24,6 +24,8 @@ import useSWR from 'swr';
 
 import collect from 'collect.js';
 
+import Head from 'next/head';
+
 const fetcher = (url) => fetch(url).then((r) => r.json());
 
 import { proxyImageUrl } from '../../libs/imgix';
@@ -45,6 +47,41 @@ export default function WalletPage({ wallet, nfts }) {
 
   return (
     <div className="min-h-screen p-8 text-white bg-black">
+      <Head>
+        <title>SolNFT.Gallery - Your own NFT Gallery</title>
+        <meta name="title" content="SolNFT.Gallery - Your own NFT Gallery" />
+        <meta
+          name="description"
+          content="Scan any Solana wallet address and see all the NFTs in a beautiful gallery."
+        />
+
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://solnft.gallery" />
+        <meta
+          property="og:title"
+          content="SolNFT.Gallery - Your own NFT Gallery"
+        />
+        <meta
+          property="og:description"
+          content="Scan any Solana wallet address and see all the NFTs in a beautiful gallery."
+        />
+        <meta property="og:image" content="/og.png/" />
+
+        <meta property="twitter:card" content="summary_large_image" />
+        <meta property="twitter:url" content="https://solnft.gallery" />
+        <meta
+          property="twitter:title"
+          content="SolNFT.Gallery - Your own NFT Gallery"
+        />
+        <meta
+          property="twitter:description"
+          content="Scan any Solana wallet address and see all the NFTs in a beautiful gallery."
+        />
+        <meta property="twitter:image" content="/og.png/" />
+
+        <link rel="icon" href="/favicon.ico" />
+        <link rel="stylesheet" href="https://rsms.me/inter/inter.css" />
+      </Head>
       <div className="min-h-full mx-auto rounded-lg max-w-7xl">
         <header className="flex items-center justify-between mb-4">
           <div>
