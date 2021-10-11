@@ -67,7 +67,7 @@ export default function WalletPage({ wallet, nfts }) {
         />
         <meta property="og:image:width" content="1200" />
         <meta property="og:image:height" content="600" />
-        <meta property="og:image" content="/og.png" />
+        <meta property="og:image" content="https://solnft.gallery/og.png" />
 
         <meta property="twitter:card" content="summary_large_image" />
         <meta property="twitter:url" content="https://solnft.gallery" />
