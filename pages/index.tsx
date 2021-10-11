@@ -71,7 +71,6 @@ export default function Home() {
           property="twitter:description"
           content="Scan any Solana wallet address and see all the NFTs in a beautiful gallery."
         />
-        <meta property="twitter:image" content="/og.png" />
 
         <link rel="icon" href="/favicon.ico" />
         <link rel="stylesheet" href="https://rsms.me/inter/inter.css" />
